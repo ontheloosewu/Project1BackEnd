@@ -7,6 +7,10 @@ public class Complaint {
     private Priority priority;
     private int meetingId;
 
+    public Complaint() {
+
+    }
+
     public Complaint(int complaintId, String compText, Priority priority, int meetingId) {
         this.complaintId = complaintId;
         this.compText = compText;

@@ -7,6 +7,8 @@ import dev.wu.daos.ResidentDAOPostgres;
 import dev.wu.dtos.LoginCredentials;
 import dev.wu.entities.Complaint;
 import dev.wu.entities.Resident;
+import dev.wu.exceptions.NoResidentFoundException;
+import dev.wu.exceptions.PasswordMismatchException;
 import dev.wu.services.*;
 import io.javalin.Javalin;
 import io.javalin.http.Handler;
@@ -69,6 +71,42 @@ public class App {
             Resident resident = loginService.validateUser(credentials.getUsername(), credentials.getPassword());
             String residentJson = gson.toJson(resident);
             ctx.result(residentJson);
+        });
+
+        Handler viewAllComplaintsHandler = ctx -> {
+            Gson gson = new Gson();
+            String json = gson.toJson(App.complaintService.getAllComplaints());
+            ctx.result(json);
+        };
+
+        app.get("/complaints", viewAllComplaintsHandler);
+
+        Handler updateComplaintHandler = ctx -> {
+            int idNum = Integer.parseInt(ctx.pathParam("idNum"));
+            if(App.complaintService.getComplaintById(idNum) == null){
+                ctx.status(404);
+                ctx.result("Complaint not found.");
+            } else {
+                String body = ctx.body();
+                Gson gson = new Gson();
+                Complaint complaint = gson.fromJson(body, Complaint.class);
+                Complaint updatedComplaint = App.complaintService.updateComplaint(complaint);
+                String json = gson.toJson(updatedComplaint);
+                ctx.status(200);
+                ctx.result(json);
+            }
+        };
+
+        app.put("/complaints/{idNum}", updateComplaintHandler);
+
+        app.exception(NoResidentFoundException.class, (exception, ctx) -> {
+            ctx.status(404);
+            ctx.result("No resident found with this username");
+        });
+
+        app.exception(PasswordMismatchException.class, (exception, ctx) -> {
+            ctx.status(400);
+            ctx.result("Password is incorrect");
         });
 
         app.start();

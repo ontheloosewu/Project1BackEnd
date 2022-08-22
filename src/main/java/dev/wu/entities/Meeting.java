@@ -2,7 +2,7 @@ package dev.wu.entities;
 
 public class Meeting {
 
-    private int id;
+    private int meetingId;
     private String location;
     private int date;
     private String summary;
@@ -11,19 +11,19 @@ public class Meeting {
 
     }
 
-    public Meeting(int id, String location, int date, String summary) {
-        this.id = id;
+    public Meeting(int meetingId, String location, int date, String summary) {
+        this.meetingId = meetingId;
         this.location = location;
         this.date = date;
         this.summary = summary;
     }
 
-    public int getId() {
-        return id;
+    public int getMeetingId() {
+        return meetingId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setMeetingId(int meetingId) {
+        this.meetingId = meetingId;
     }
 
     public String getLocation() {
@@ -53,7 +53,7 @@ public class Meeting {
     @Override
     public String toString() {
         return "Meeting{" +
-                "id=" + id +
+                "id=" + meetingId +
                 ", location='" + location + '\'' +
                 ", date=" + date +
                 ", summary='" + summary + '\'' +

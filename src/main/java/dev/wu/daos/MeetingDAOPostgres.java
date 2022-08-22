@@ -22,7 +22,7 @@ public class MeetingDAOPostgres implements MeetingDAO{
             List<Meeting> meetings = new ArrayList();
             while (rs.next()) {
                 Meeting meeting = new Meeting();
-                meeting.setId(rs.getInt("id"));
+                meeting.setMeetingId(rs.getInt("id"));
                 meeting.setLocation(rs.getString("location"));
                 meeting.setDate(rs.getInt("date"));
                 meeting.setSummary(rs.getString("summary"));
