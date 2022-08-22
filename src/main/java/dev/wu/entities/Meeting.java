@@ -4,14 +4,14 @@ public class Meeting {
 
     private int meetingId;
     private String location;
-    private int date;
+    private long date;
     private String summary;
 
     public Meeting() {
 
     }
 
-    public Meeting(int meetingId, String location, int date, String summary) {
+    public Meeting(int meetingId, String location, long date, String summary) {
         this.meetingId = meetingId;
         this.location = location;
         this.date = date;
@@ -34,11 +34,11 @@ public class Meeting {
         this.location = location;
     }
 
-    public int getDate() {
+    public long getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

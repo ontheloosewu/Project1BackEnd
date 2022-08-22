@@ -17,8 +17,9 @@ public class MeetingServiceImpl implements MeetingService{
 
     @Override
     public Meeting createValidNewMeeting(Meeting meeting) {
-        long epoch = System.currentTimeMillis()/1000;
-        System.out.println(epoch);
-        return meeting;
+        if(meeting.getDate() < System.currentTimeMillis()/1000){
+            throw new RuntimeException("Meeting date must be in the FUTURE.");
+        }
+        return this.meetingDao.createMeeting(meeting);
     }
 }
