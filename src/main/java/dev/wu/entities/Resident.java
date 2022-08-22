@@ -7,6 +7,10 @@ public class Resident {
     private String password;
     private UserType userType;
 
+    public Resident() {
+
+    }
+
     public Resident(int id, String username, String password, UserType userType) {
         this.id = id;
         this.username = username;
