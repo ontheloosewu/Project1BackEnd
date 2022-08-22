@@ -35,4 +35,23 @@ public class MeetingDAOPostgres implements MeetingDAO{
             return null;
         }
     }
+
+    @Override
+    public Meeting createMeeting(Meeting meeting) {
+        try (Connection conn = ConnectionUtil.createConnection()) {
+            String sql = "insert into meeting values (default, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, meeting.getLocation());
+            preparedStatement.setInt(2, meeting.getDate());
+            preparedStatement.setString(3, meeting.getSummary());
+
+            preparedStatement.execute();
+
+            return meeting;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

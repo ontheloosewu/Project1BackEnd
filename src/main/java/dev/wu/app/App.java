@@ -6,6 +6,7 @@ import dev.wu.daos.MeetingDAOPostgres;
 import dev.wu.daos.ResidentDAOPostgres;
 import dev.wu.dtos.LoginCredentials;
 import dev.wu.entities.Complaint;
+import dev.wu.entities.Meeting;
 import dev.wu.entities.Resident;
 import dev.wu.exceptions.NoResidentFoundException;
 import dev.wu.exceptions.PasswordMismatchException;
@@ -98,6 +99,19 @@ public class App {
         };
 
         app.put("/complaints/{idNum}", updateComplaintHandler);
+
+        Handler createMeetingHandler = ctx -> {
+            String body = ctx.body();
+            Gson gson = new Gson();
+            Meeting meeting = gson.fromJson(body, Meeting.class);
+            Meeting newMeeting = App.meetingService.createValidNewMeeting(meeting);
+            String json = gson.toJson(newMeeting);
+
+            ctx.status(201);
+            ctx.result(json);
+        };
+
+        app.post("/meetings", createMeetingHandler);
 
         app.exception(NoResidentFoundException.class, (exception, ctx) -> {
             ctx.status(404);
