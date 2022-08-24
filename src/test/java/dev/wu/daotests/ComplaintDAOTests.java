@@ -20,15 +20,24 @@ public class ComplaintDAOTests {
     @BeforeAll
     static void setup() {
         try (Connection connection = ConnectionUtil.createConnection()) {
-            String sql = "create table complaint(\n" +
+            Statement statement = connection.createStatement();
+            String sql = "create table meeting(\n" +
+                    "id serial primary key,\n" +
+                    "location varchar(20) not null,\n" +
+                    "date int,\n" +
+                    "summary varchar(200)\n" +
+                    ");\n";
+            String sql2 = "create table complaint(\n" +
                     "id serial primary key,\n" +
                     "comptext varchar(255) not null,\n" +
                     "priority varchar(10) not null,\n" +
                     "meetingid int references meeting(id)\n" +
                     ");\n";
-
-            Statement statement = connection.createStatement();
-            statement.execute(sql);
+            String sql3 = "insert into meeting values (-1, 'NO REAL LOCATION', -1, 'NOT A REAL MEETING');";
+            statement.addBatch(sql);
+            statement.addBatch(sql2);
+            statement.addBatch(sql3);
+            statement.executeBatch();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,9 +47,12 @@ public class ComplaintDAOTests {
     @AfterAll
     static void teardown() {
         try (Connection connection = ConnectionUtil.createConnection()) {
-            String sql = "drop table complaint";
             Statement statement = connection.createStatement();
-            statement.execute(sql);
+            String sql = "drop table complaint";
+            String sql2 = "drop table meeting";
+            statement.addBatch(sql);
+            statement.addBatch(sql2);
+            statement.executeBatch();
 
         } catch (SQLException e) {
             e.printStackTrace();

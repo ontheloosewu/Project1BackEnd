@@ -2,7 +2,6 @@ package dev.wu.services;
 
 import dev.wu.daos.ComplaintDAO;
 import dev.wu.entities.Complaint;
-import dev.wu.entities.Priority;
 
 import java.util.List;
 
