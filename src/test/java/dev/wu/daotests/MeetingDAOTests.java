@@ -48,17 +48,17 @@ public class MeetingDAOTests {
 
     @Test
     @Order(1)
-    void get_all_meetings_test(){
-        List<Meeting> meetings = meetingDAO.viewAllMeetings();
-        Assertions.assertNotEquals(0, meetings.size()); // should have dummy meeting
-        System.out.println(meetings);
-    }
-
-    @Test
-    @Order(2)
     void create_new_meeting_test(){
         Meeting meeting = new Meeting(0, "Sotenbori", 10192022, "Discussing complaint here!");
         Meeting createdMeeting = meetingDAO.createMeeting(meeting);
         Assertions.assertEquals("Discussing complaint here!", createdMeeting.getSummary());
+    }
+
+    @Test
+    @Order(2)
+    void get_all_meetings_test(){
+        List<Meeting> meetings = meetingDAO.viewAllMeetings();
+        Assertions.assertNotEquals(0, meetings.size()); // should have dummy meeting
+        System.out.println(meetings);
     }
 }
