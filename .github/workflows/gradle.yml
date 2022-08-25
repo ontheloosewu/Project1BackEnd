@@ -20,6 +20,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      Project1DB: ${{env.DB_CONNECTION}}
 
     steps:
     - uses: actions/checkout@v3

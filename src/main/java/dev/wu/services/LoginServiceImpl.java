@@ -7,7 +7,7 @@ import dev.wu.exceptions.PasswordMismatchException;
 
 public class LoginServiceImpl implements LoginService{
 
-    private ResidentDAO residentDAO;
+    private final ResidentDAO residentDAO;
 
     public LoginServiceImpl (ResidentDAO residentDAO) { this.residentDAO = residentDAO; }
     @Override
