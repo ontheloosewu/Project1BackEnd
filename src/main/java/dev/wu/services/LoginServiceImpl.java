@@ -17,7 +17,7 @@ public class LoginServiceImpl implements LoginService{
             throw new NoResidentFoundException("No employee found with that username");
         }
         if(!resident.getPassword().equals(password)){
-            throw new PasswordMismatchException("Password is incorrect.");
+            throw new PasswordMismatchException("Password is incorrect");
         }
 
         return resident;

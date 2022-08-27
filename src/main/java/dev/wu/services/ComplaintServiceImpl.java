@@ -13,9 +13,7 @@ public class ComplaintServiceImpl implements ComplaintService{
 
     @Override
     public Complaint newValidComplaint(Complaint complaint) {
-        if(complaint.getCompText().length() == 0){
-            throw new RuntimeException("Complaint box cannot be empty.");
-        }
+        // handled in frontend
         return this.complaintDAO.newComplaint(complaint);
     }
 

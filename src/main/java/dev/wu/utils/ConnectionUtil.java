@@ -7,8 +7,7 @@ import java.sql.SQLException;
 public class ConnectionUtil {
     public static Connection createConnection() {
         try {
-            Connection conn = DriverManager.getConnection(System.getenv("Project1DB"));
-            return conn;
+            return DriverManager.getConnection(System.getenv("Project1DB"));
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
