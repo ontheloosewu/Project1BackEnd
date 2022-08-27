@@ -2,8 +2,10 @@ package dev.wu.services;
 
 import dev.wu.daos.ResidentDAO;
 import dev.wu.entities.Resident;
+import dev.wu.entities.UserType;
 import dev.wu.exceptions.NoResidentFoundException;
 import dev.wu.exceptions.PasswordMismatchException;
+import dev.wu.exceptions.UnapprovedAccountException;
 
 public class LoginServiceImpl implements LoginService{
 
@@ -18,6 +20,9 @@ public class LoginServiceImpl implements LoginService{
         }
         if(!resident.getPassword().equals(password)){
             throw new PasswordMismatchException("Password is incorrect");
+        }
+        if(resident.getUserType() == UserType.PENDING){
+            throw new UnapprovedAccountException("Account has not been approved yet");
         }
 
         return resident;

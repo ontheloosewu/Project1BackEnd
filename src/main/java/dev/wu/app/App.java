@@ -12,6 +12,7 @@ import dev.wu.entities.Resident;
 import dev.wu.exceptions.DuplicateUsernameException;
 import dev.wu.exceptions.NoResidentFoundException;
 import dev.wu.exceptions.PasswordMismatchException;
+import dev.wu.exceptions.UnapprovedAccountException;
 import dev.wu.services.*;
 import io.javalin.Javalin;
 
@@ -74,6 +75,11 @@ public class App {
         app.exception(DuplicateUsernameException.class, (exception, ctx) -> {
             ctx.status(409);
             ctx.result("Username already exists");
+        });
+
+        app.exception(UnapprovedAccountException.class, (exception, ctx) -> {
+            ctx.status(401);
+            ctx.result("Account hasn't been approved yet");
         });
 
         app.start();
