@@ -3,6 +3,7 @@ package dev.wu.app;
 import com.google.gson.Gson;
 import dev.wu.controllers.ComplaintController;
 import dev.wu.controllers.MeetingController;
+import dev.wu.controllers.ResidentController;
 import dev.wu.daos.ComplaintDAOPostgres;
 import dev.wu.daos.MeetingDAOPostgres;
 import dev.wu.daos.ResidentDAOPostgres;
@@ -16,8 +17,6 @@ import io.javalin.Javalin;
 import io.javalin.http.Handler;
 
 public class App {
-
-    public static ResidentService residentService = new ResidentServiceImpl(new ResidentDAOPostgres());
 
     public static LoginService loginService = new LoginServiceImpl(new ResidentDAOPostgres());
 
@@ -33,6 +32,10 @@ public class App {
         MeetingService meetingService = new MeetingServiceImpl(new MeetingDAOPostgres());
         MeetingController meetingController = new MeetingController(meetingService);
 
+        ResidentService residentService = new ResidentServiceImpl(new ResidentDAOPostgres());
+        ResidentController residentController = new ResidentController(residentService);
+
+
         app.post("/complaints", complaintController.createComplaintHandler);
 
         app.get("/meetings", meetingController.viewAllMeetingsHandler);
@@ -43,18 +46,9 @@ public class App {
 
         app.post("/meetings", meetingController.createMeetingHandler);
 
-        Handler registerUserHandler = ctx -> {
-            String body = ctx.body();
-            Gson gson = new Gson();
-            Resident resident = gson.fromJson(body, Resident.class);
-            Resident registeredResident = App.residentService.newValidUser(resident);
-            String json = gson.toJson(registeredResident);
+        app.post("/register", residentController.registerUserHandler);
 
-            ctx.status(201);
-            ctx.result(json);
-        };
-
-        app.post("/register", registerUserHandler);
+        app.patch("/register/{userName}/approve", residentController.approveRegistrationHandler);
 
         app.post("/login", ctx -> {
             String body = ctx.body();

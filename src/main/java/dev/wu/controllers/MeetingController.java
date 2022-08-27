@@ -1,7 +1,6 @@
 package dev.wu.controllers;
 
 import com.google.gson.Gson;
-import dev.wu.app.App;
 import dev.wu.entities.Meeting;
 import dev.wu.services.MeetingService;
 import io.javalin.http.Handler;

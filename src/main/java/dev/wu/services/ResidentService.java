@@ -5,4 +5,6 @@ import dev.wu.entities.Resident;
 public interface ResidentService {
 
     Resident newValidUser(Resident resident);
+
+    boolean validApprovalByUsername(String username);
 }

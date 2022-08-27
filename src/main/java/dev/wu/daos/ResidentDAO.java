@@ -7,4 +7,6 @@ public interface ResidentDAO {
     Resident registerUser(Resident resident);
 
     Resident getResidentByUsername(String username);
+
+    boolean approveRegistrationByUsername(String username);
 }

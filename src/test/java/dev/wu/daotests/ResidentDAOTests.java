@@ -49,16 +49,22 @@ public class ResidentDAOTests {
     @Test
     @Order(1)
     void register_new_resident_test(){
-        Resident resident = new Resident(0, "partygoer5050", "regular", UserType.REGISTERED);
+        Resident resident = new Resident(0, "partygoer5050", "regular", UserType.PENDING);
         residentDAO.registerUser(resident);
         Assertions.assertNotEquals(-1, resident.getId());
-        System.out.println(resident);
     }
 
     @Test
     @Order(2)
     void get_resident_by_username_test(){
         Resident resident = residentDAO.getResidentByUsername("partygoer5050");
-        Assertions.assertEquals(UserType.REGISTERED, resident.getUserType());
+        Assertions.assertEquals(1, resident.getId());
+    }
+
+    @Test
+    @Order(3)
+    void approve_registration_test(){
+        residentDAO.approveRegistrationByUsername("partygoer5050");
+        Assertions.assertEquals(UserType.REGISTERED, residentDAO.getResidentByUsername("partygoer5050").getUserType());
     }
 }

@@ -52,4 +52,22 @@ public class ResidentDAOPostgres implements ResidentDAO{
             return null;
         }
     }
+
+    @Override
+    public boolean approveRegistrationByUsername(String username) {
+        try (Connection conn = ConnectionUtil.createConnection()) {
+            String sql = "update resident set usertype = ? where username = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+            preparedStatement.setString(1, UserType.REGISTERED.toString());
+            preparedStatement.setString(2, username);
+
+            preparedStatement.executeUpdate();
+
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
