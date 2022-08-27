@@ -5,6 +5,8 @@ import dev.wu.entities.Resident;
 import dev.wu.entities.UserType;
 import dev.wu.exceptions.DuplicateUsernameException;
 
+import java.util.List;
+
 public class ResidentServiceImpl implements ResidentService{
 
     private final ResidentDAO residentDAO;
@@ -17,6 +19,11 @@ public class ResidentServiceImpl implements ResidentService{
             throw new DuplicateUsernameException(("Username already exists"));
         }
         return this.residentDAO.registerUser(resident);
+    }
+
+    @Override
+    public List<Resident> getAllUsers() {
+        return this.residentDAO.getAllUsers();
     }
 
     @Override

@@ -2,6 +2,8 @@ package dev.wu.daos;
 
 import dev.wu.entities.Resident;
 
+import java.util.List;
+
 public interface ResidentDAO {
 
     Resident registerUser(Resident resident);
@@ -9,4 +11,6 @@ public interface ResidentDAO {
     Resident getResidentByUsername(String username);
 
     boolean approveRegistrationByUsername(String username);
+
+    List<Resident> getAllUsers();
 }

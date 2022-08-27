@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResidentDAOPostgres implements ResidentDAO{
     @Override
@@ -46,6 +48,31 @@ public class ResidentDAOPostgres implements ResidentDAO{
             resident.setUserType(UserType.valueOf(rs.getString("usertype")));
 
             return resident;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public List<Resident> getAllUsers() {
+        try (Connection conn = ConnectionUtil.createConnection()) {
+            String sql = "select id, username, usertype from resident";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<Resident> residents = new ArrayList();
+            while(resultSet.next()){
+                Resident resident = new Resident();
+                resident.setId(resultSet.getInt("id"));
+                resident.setUsername(resultSet.getString("username"));
+                resident.setUserType(UserType.valueOf(resultSet.getString("usertype")));
+                residents.add(resident);
+            }
+
+            return residents;
 
         } catch (SQLException e) {
             e.printStackTrace();

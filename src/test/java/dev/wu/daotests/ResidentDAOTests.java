@@ -67,4 +67,18 @@ public class ResidentDAOTests {
         residentDAO.approveRegistrationByUsername("partygoer5050");
         Assertions.assertEquals(UserType.REGISTERED, residentDAO.getResidentByUsername("partygoer5050").getUserType());
     }
+
+    @Test
+    @Order(4)
+    void get_all_users_test(){
+        Resident resident = new Resident(0, "partygoer5051", "regular", UserType.PENDING);
+        Resident resident2 = new Resident(0, "partygoer5052", "regular", UserType.PENDING);
+        Resident resident3 = new Resident(0, "partygoer5053", "regular", UserType.PENDING);
+        Resident resident4 = new Resident(0, "partygoer5054", "regular", UserType.PENDING);
+        residentDAO.registerUser(resident);
+        residentDAO.registerUser(resident2);
+        residentDAO.registerUser(resident3);
+        residentDAO.registerUser(resident4);
+        Assertions.assertEquals(5, residentDAO.getAllUsers().size());
+    }
 }

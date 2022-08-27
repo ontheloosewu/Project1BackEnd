@@ -1,7 +1,6 @@
 package dev.wu.controllers;
 
 import com.google.gson.Gson;
-import dev.wu.app.App;
 import dev.wu.entities.Resident;
 import dev.wu.services.ResidentService;
 import io.javalin.http.Handler;
@@ -24,6 +23,12 @@ public class ResidentController {
         String json = gson.toJson(registeredResident);
 
         ctx.status(201);
+        ctx.result(json);
+    };
+
+    public Handler getAllUsers = ctx -> {
+        Gson gson = new Gson();
+        String json = gson.toJson(residentService.getAllUsers());
         ctx.result(json);
     };
 

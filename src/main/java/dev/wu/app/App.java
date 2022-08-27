@@ -14,7 +14,6 @@ import dev.wu.exceptions.NoResidentFoundException;
 import dev.wu.exceptions.PasswordMismatchException;
 import dev.wu.services.*;
 import io.javalin.Javalin;
-import io.javalin.http.Handler;
 
 public class App {
 
@@ -47,6 +46,8 @@ public class App {
         app.post("/meetings", meetingController.createMeetingHandler);
 
         app.post("/register", residentController.registerUserHandler);
+
+        app.get("/users", residentController.getAllUsers);
 
         app.patch("/register/{userName}/approve", residentController.approveRegistrationHandler);
 
