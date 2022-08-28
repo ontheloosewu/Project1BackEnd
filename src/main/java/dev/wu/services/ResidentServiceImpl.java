@@ -15,7 +15,7 @@ public class ResidentServiceImpl implements ResidentService{
 
     @Override
     public Resident newValidUser(Resident resident) {
-        if(resident.getUsername().equals(residentDAO.getResidentByUsername(resident.getUsername()).getUsername())){
+        if(residentDAO.getResidentByUsername(resident.getUsername()) != null){
             throw new DuplicateUsernameException(("Username already exists"));
         }
         return this.residentDAO.registerUser(resident);
