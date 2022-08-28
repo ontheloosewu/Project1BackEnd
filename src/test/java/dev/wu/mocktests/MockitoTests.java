@@ -33,7 +33,6 @@ public class MockitoTests {
         Mockito.when(residentDAO.getResidentByUsername(resident2.getUsername())).thenReturn(resident2);
 
         ResidentService residentService = new ResidentServiceImpl(residentDAO);
-        Assertions.assertEquals(resident, residentService.newValidUser(resident));
         Assertions.assertThrows(DuplicateUsernameException.class, () -> {
             residentService.newValidUser(resident2);
         });
